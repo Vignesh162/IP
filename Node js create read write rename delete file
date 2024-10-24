@@ -1,0 +1,90 @@
+
+//Create a file
+// Import the fs module
+const fs = require('fs');
+
+// Define the file path and content
+const filePath = 'example.txt';
+const content = 'Hello, this is a sample content for the file!';
+
+// Create and write content to the file
+fs.writeFile(filePath, content, (err) => {
+    if (err) {
+        return console.error(`An error occurred: ${err.message}`);
+    }
+    console.log('File created and content written successfully.');
+});
+
+//to run
+node createFile.js
+
+//Read data from a file
+// Import the fs module
+const fs = require('fs');
+
+// Define the file path
+const filePath = 'example.txt';
+
+// Read the file content
+fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+        return console.error(`An error occurred: ${err.message}`);
+    }
+    console.log('File content:', data);
+});
+
+//to run  in terminal
+node readfile.js
+
+//Write the data to a file
+// Import the fs module
+const fs = require('fs');
+
+// Define the file path and content to write
+const filePath = 'output.txt';
+const content = 'This is the new content being written to the file.';
+
+// Write data to the file
+fs.writeFile(filePath, content, (err) => {
+    if (err) {
+        return console.error(`An error occurred: ${err.message}`);
+    }
+    console.log('File written successfully.');
+});
+
+//to run 
+node writeFile.js
+
+//rename a file
+// Import the fs module
+const fs = require('fs');
+
+// Define the old file name and the new file name
+const oldFilePath = 'output.txt';
+const newFilePath = 'renamedFile.txt';
+
+// Rename the file
+fs.rename(oldFilePath, newFilePath, (err) => {
+    if (err) {
+        return console.error(`An error occurred: ${err.message}`);
+    }
+    console.log(`File renamed successfully to ${newFilePath}`);
+});
+
+//delete a file
+// Import the fs module
+const fs = require('fs');
+
+// Define the file path to be deleted
+const filePath = 'output.txt';
+
+// Delete the file
+fs.unlink(filePath, (err) => {
+    if (err) {
+        return console.error(`An error occurred: ${err.message}`);
+    }
+    console.log(`File '${filePath}' deleted successfully.`);
+});
+
+
+
