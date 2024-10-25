@@ -1,0 +1,134 @@
+Let's create a React app that demonstrates four different hooks: 
+
+1. **`useState`**: for managing state.
+2. **`useEffect`**: for side effects like data fetching, subscriptions, etc.
+3. **`useRef`**: for accessing and manipulating DOM elements directly.
+4. **`useContext`**: for sharing data between components without passing props manually at every level.
+
+### Full Example: Using 4 React Hooks
+
+We'll build a simple app that:
+- Displays a counter (`useState`).
+- Logs messages when the component updates (`useEffect`).
+- Focuses an input field using a button click (`useRef`).
+- Shares global data (theme) between components using `useContext`.
+
+### Code:
+
+```jsx
+import React, { useState, useEffect, useRef, useContext, createContext } from 'react';
+
+// 1. Create a context for theme
+const ThemeContext = createContext();
+
+function Counter() {
+  // 2. useState hook to manage the state of the counter
+  const [count, setCount] = useState(0);
+
+  // 3. useRef hook to manage reference to input DOM element
+  const inputRef = useRef(null);
+
+  // 4. useContext hook to access the theme
+  const theme = useContext(ThemeContext);
+
+  // 5. useEffect hook for side effects (logging updates)
+  useEffect(() => {
+    console.log('Component updated! Current count:', count);
+  }, [count]); // Run only when count changes
+
+  // Function to focus the input field
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <div style={{ background: theme.background, color: theme.color, padding: '20px', borderRadius: '10px' }}>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <br />
+      <input ref={inputRef} placeholder="Focus me with button" />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+
+// Parent component where ThemeContext.Provider is used
+function App() {
+  // Define the theme data to be shared via context
+  const theme = {
+    background: '#282c34',
+    color: 'white',
+  };
+
+  return (
+    <ThemeContext.Provider value={theme}>
+      <Counter />
+    </ThemeContext.Provider>
+  );
+}
+
+export default App;
+```
+
+### Breakdown of the Hooks:
+
+1. **`useState`**:
+   - Used to manage the state of the counter (`count`).
+   - Functions `setCount` to update the state.
+
+   ```jsx
+   const [count, setCount] = useState(0);
+   ```
+
+2. **`useEffect`**:
+   - Logs a message whenever the component updates (whenever `count` changes).
+   - Side effect (like logging or fetching data) is executed after rendering.
+
+   ```jsx
+   useEffect(() => {
+     console.log('Component updated! Current count:', count);
+   }, [count]); // Runs only when count changes
+   ```
+
+3. **`useRef`**:
+   - Used to directly access and manipulate the DOM. In this case, it’s used to focus on an input element.
+
+   ```jsx
+   const inputRef = useRef(null);
+   ```
+
+   - `inputRef.current.focus()` is used to programmatically focus the input element.
+
+4. **`useContext`**:
+   - Allows the theme to be shared between components without passing props manually. The theme values are provided in `App` and consumed in `Counter`.
+
+   ```jsx
+   const theme = useContext(ThemeContext);
+   ```
+
+### How It Works:
+1. The `Counter` component manages the `count` state and updates it with `Increment` and `Decrement` buttons.
+2. `useEffect` logs a message every time the `count` changes.
+3. `useRef` gives direct access to the input field, and the button focuses the input when clicked.
+4. `useContext` provides the theme (background and text color), shared across components without passing it through props.
+
+### How to Run This:
+
+1. Create a new React app using `create-react-app` or another method:
+   ```bash
+   npx create-react-app my-hooks-app
+   cd my-hooks-app
+   ```
+
+2. Replace the code in the `src/App.js` file with the code above.
+
+3. Run the app:
+   ```bash
+   npm start
+   ```
+
+You'll see a simple counter with buttons to increment and decrement, an input field that can be focused with a button, and a theme applied using the `useContext` hook.
+
+### Conclusion:
+This example demonstrates four powerful React hooks (`useState`, `useEffect`, `useRef`, and `useContext`) and shows how they work together to create a dynamic, interactive application with shared state and side effects.
